@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg '${ctxScg:key}' %n"/>
+        </Console>
+        <File name="FileAppenderOld" fileName="logs/app-old.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="FileAppenderNew" fileName="logs/app-new.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+        </File>
+        <Accumulating name="AccuAppender" ignoreExceptions="true">
+            <AppenderRef ref="FileAppenderNew"/>
+        </Accumulating>
+    </Appenders>
+    <Loggers>
+        <Logger name="rt.tests.accumappender.danger" level="debug" additivity="false">
+            <AppenderRef ref="Console">
+                <!--<ExtLoggerFilter/>-->
+            </AppenderRef>
+        </Logger>
+        <!--<Logger name="rt.tests.logger" level="debug" additivity="false">-->
+            <!--<AppenderRef ref="Console">-->
+                <!--&lt;!&ndash;<ExtLoggerFilter/>&ndash;&gt;-->
+            <!--</AppenderRef>-->
+        <!--</Logger>-->
+        <Logger name="rt.tests" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppenderOld">
+                <NoExtLoggerFilter />
+            </AppenderRef>
+            <AppenderRef ref="AccuAppender">
+                <ExtLoggerFilter/>
+            </AppenderRef>
+        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+            <!--<ExtLoggerFilter/>-->
+        </Root>
+    </Loggers>
+</Configuration>

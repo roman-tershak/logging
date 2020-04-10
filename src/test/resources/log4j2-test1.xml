@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <List name="List">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </List>
+        <Accumulating name="AccuAppender" passThroughLevel="ERROR" passExceptionThrough="true" ignoreExceptions="true">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="List"/>
+        </Accumulating>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.acme.tests" level="DEBUG" additivity="false">
+            <AppenderRef ref="AccuAppender"/>
+        </Logger>
+        <Root level="DEBUG">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
